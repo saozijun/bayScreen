@@ -424,7 +424,7 @@ defineExpose({
     right: 50%;
     transform: translateX(50%);
     z-index: 1;
-    padding: vw(15);
+    // padding: vw(15);
     border-radius: vw(8);
 
     .button-group {

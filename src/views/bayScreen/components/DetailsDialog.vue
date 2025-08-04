@@ -1,24 +1,12 @@
 <template>
   <div>
-    <el-dialog
-      v-model="visible"
-      width="80%"
-      top="5vh"
-      :show-close="false"
-      append-to-body
-      class="bay-dialog"
-      @opened="onDialogOpened"
-    >
+    <el-dialog v-model="visible" width="80%" top="5vh" :show-close="false" append-to-body class="bay-dialog"
+      @opened="onDialogOpened">
       <div class="bay-main">
         <div class="list">
           <ul>
-            <li
-              v-for="(item, index) in menu"
-              :key="item"
-              :class="{ active: menuIndex === index }"
-              @click="menuIndex = index"
-              >{{ item }}</li
-            >
+            <li v-for="(item, index) in menu" :key="item" :class="{ active: menuIndex === index }"
+              @click="menuIndex = index">{{ item }}</li>
           </ul>
         </div>
         <div class="content">
@@ -113,14 +101,17 @@ defineExpose({ open })
   display: flex;
   flex-direction: column;
   gap: vh(20);
+
   .list {
     display: flex;
     align-items: center;
+
     ul {
       display: flex;
       flex-wrap: wrap;
       gap: vw(20);
       list-style: none;
+
       li {
         min-width: vw(120);
         padding: vw(10) vw(16);
@@ -132,36 +123,44 @@ defineExpose({ open })
         cursor: pointer;
         font-size: vw(14);
         transition: background-color 0.3s;
+
         &:hover {
           opacity: 0.9;
         }
       }
+
       .active {
         background-color: #146148;
       }
     }
   }
+
   .content {
     display: flex;
     gap: vw(20);
     flex: 1;
     height: 100%;
+
     .left {
       flex: 2;
       background-color: #ffffff48;
       padding: vw(20) vw(30);
+
       .left-b1 {
         background-color: #0000004b;
         height: vh(400);
       }
+
       .left-b2 {
         display: flex;
         margin-top: vh(40);
         gap: vw(20);
         color: #fff;
+
         >div {
           flex: 1;
-          .card-content{
+
+          .card-content {
             margin-top: vh(20);
             width: 100%;
             height: vh(200);
@@ -169,41 +168,52 @@ defineExpose({ open })
         }
       }
     }
+
     .right {
       flex: 1;
       background-color: #ffffff48;
       color: #fff;
       padding: vw(20) vw(30);
-      > div {
+
+      >div {
         margin-bottom: vh(20);
       }
+
       .list-page {
         @include flex-between;
+
         .item {
           flex: 1;
           font-size: vw(30);
+
           p {
             font-size: vw(14);
             color: #ddd;
           }
         }
       }
+
       .descriptions {
         font-size: vw(16);
-        > span {
+
+        >span {
           font-size: vw(14);
           color: #ddd;
         }
+
         h1 {
           font-weight: 500;
         }
+
         p {
           margin-top: vh(10);
         }
       }
+
       .right-map {
         width: 100%;
         height: vw(380);
+
         div {
           width: 100%;
           height: 100%;

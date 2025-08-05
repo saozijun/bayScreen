@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import { Echart } from '@/components/Echart'
 import { computeFontSize } from '@/utils'
@@ -40,103 +40,114 @@ const data = [
 const dateList = data.map((item) => item[0])
 const valueList = data.map((item) => item[1])
 
-const option = ref({
-title: {
-    text: '{a|24h平均参数} {b|0.25}',
-    top: '0%',
-    left: '-1%',
-    textStyle: {
-      rich: {
-        a: {
-          fontSize: computeFontSize(14),
-          color: '#ddd'
-        },
-        b: {
-          fontSize: computeFontSize(32),
-          color: '#339569',
-          padding: [0, 0, 2, 4]
+const option = ref({})
+const generateOption = () => {
+  option.value = {
+    title: {
+      text: '{a|24h平均参数} {b|0.25}',
+      top: '0%',
+      left: '-1%',
+      textStyle: {
+        rich: {
+          a: {
+            fontSize: computeFontSize(14),
+            color: '#ddd'
+          },
+          b: {
+            fontSize: computeFontSize(32),
+            color: '#339569',
+            padding: [0, 0, 2, 4]
 
+          }
         }
       }
-    }
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'cross',
-      label: {
-        backgroundColor: '#6a7985'
-      }
     },
-    backgroundColor: 'rgba(0,0,0,0)',
-    borderColor: 'rgba(0,0,0,0)',
-    className: 'tooltip-box',
-    formatter: function (params) {
-      const htmlText = `<div class='tooltip-style'>
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      },
+      backgroundColor: 'rgba(0,0,0,0)',
+      borderColor: 'rgba(0,0,0,0)',
+      className: 'tooltip-box',
+      formatter: function (params) {
+        const htmlText = `<div class='tooltip-style'>
             <div>${params[0].name}</div>
             <p>值：${params[0].value}</p>
             </div>`
-      return htmlText
-    }
-  },
-  grid: {
-    left: '5%%',
-    right: '5%',
-    bottom: '20%',
-    top: '20%'
-  },
-  visualMap: {
-    show: false,
-    type: 'continuous',
-    min: 0,
-    max: 400,
-    seriesIndex: 0,
-    inRange: {
-      color: ['#ca4271', '#f89086']
-    }
-  },
-  xAxis: {
-    type: 'category',
-    axisTick: {
+        return htmlText
+      }
+    },
+    grid: {
+      left: '5%%',
+      right: '5%',
+      bottom: '20%',
+      top: '20%'
+    },
+    visualMap: {
+      show: false,
+      type: 'continuous',
+      min: 0,
+      max: 400,
+      seriesIndex: 0,
+      inRange: {
+        color: ['#ca4271', '#f89086']
+      }
+    },
+    xAxis: {
+      type: 'category',
+      axisTick: {
+        show: false
+      },
+      axisLine: {
+        show: false
+      },
+      data: dateList,
+      axisLabel: {
+        color: '#fff',
+        fontSize: computeFontSize(13),
+        interval: 3,
+      }
+    },
+    yAxis: {
+      type: 'value',
       show: false
     },
-    axisLine: {
-      show: false
-    },
-    data: dateList,
-    axisLabel: {
-      color: '#fff',
-      fontSize: computeFontSize(13),
-      interval: 3,
-    }
-  },
-  yAxis: {
-    type: 'value',
-    show: false
-  },
-  series: [
-    {
-      type: 'line',
-      data: valueList,
-      showSymbol: false,
-      areaStyle: {
-        //区域填充样式
-        normal: {
-          opacity: 1,
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: '#ca4271'
-            },
-            {
-              offset: 1,
-              color: '#ca427100'
-            }
-          ])
+    series: [
+      {
+        type: 'line',
+        data: valueList,
+        showSymbol: false,
+        areaStyle: {
+          //区域填充样式
+          normal: {
+            opacity: 1,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#ca4271'
+              },
+              {
+                offset: 1,
+                color: '#ca427100'
+              }
+            ])
+          }
         }
       }
-    }
-  ]
+    ]
+  }
+}
+onMounted(() => {
+  generateOption()
+  window.addEventListener('resize', generateOption)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', generateOption)
 })
 </script>
 

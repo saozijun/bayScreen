@@ -12,3 +12,7 @@
 .bay-dialog .el-dialog__header {
   display: none;
 }
+/* 全局隐藏滚动条 */
+::-webkit-scrollbar {
+  display: none;
+}

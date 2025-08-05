@@ -420,7 +420,7 @@ defineExpose({
   
   .control-panel {
     position: absolute;
-    bottom: 2vh;
+    bottom: 3.5vh;
     right: 50%;
     transform: translateX(50%);
     z-index: 1;
